@@ -9,10 +9,14 @@ import line from '../Assets/Dashboard/Vector 2.svg'
 import './profile.css'
 
 export default function Profile() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isNotificationOpen, setIsOpen] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
     const toggleDropdown = () => {
-        setIsOpen(!isOpen);
+        setIsOpen(!isNotificationOpen);
     };
+    const toggleSettings = () => {
+        setShowSettings(!showSettings);
+    }
     
     const notificationGroupRef = useRef(null);
 
@@ -20,6 +24,7 @@ export default function Profile() {
     const handleClickOutside = (event) => {
       if (notificationGroupRef.current && !notificationGroupRef.current.contains(event.target)) {
         setIsOpen(false);
+          setShowSettings(false);
       }
     };
 
@@ -39,7 +44,7 @@ export default function Profile() {
                         <img src={bell} alt="notification" /></a>
                         
             </div>
-            {isOpen && (
+            {isNotificationOpen && (
        <div  ref={notificationGroupRef} className="notification-group">
                         <div className="notification-list">
                         
@@ -57,9 +62,21 @@ export default function Profile() {
       )}
             <div class="profile">
                 <img src={profilepic} style={{width: "45px",height: "45px",paddingRight:"20px"}} alt="profilePic" />
-                <span style={{paddingRight:"10px"}}>Jacob Frost</span>
-                <img src={dropdown} alt="dropdown"/>
-            </div>
+                    <span style={{ paddingRight: "10px" }}>Jacob Frost</span>
+                    <button style={{border:"none"}} onClick={toggleSettings}><img  src={dropdown} alt="dropdown"/></button>
+                    {showSettings && (
+       <div  ref={notificationGroupRef} className="ProfileNotification-group">
+                        <div className="ProfileNotification-list">
+                        <div className="ProfileNotification-item">Account Settings</div>
+                        <div className="ProfileNotification-item">Billing</div>
+                        <div className="ProfileNotification-item">Change Password</div>
+
+
+       </div>
+     </div>
+      )}
+                </div>
+                
         </div>
         </>
     )
